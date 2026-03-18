@@ -5,103 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أول عيد سوا | عمار حسام</title>
     <style>
-        :root { 
-            --primary-bg: #030712; 
-            --accent: #ffd700; 
-            --cyber-green: #00ff41;
-            --soft-white: #e5e7eb; 
-        }
-        body { margin: 0; background-color: var(--primary-bg); color: var(--soft-white); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
-        
-        /* تأثير النجوم المتساقطة في الخلفية */
-        .background-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: radial-gradient(circle at center, #111827 0%, #030712 100%); }
-
-        .page { display: none; width: 85%; max-width: 600px; animation: zoomIn 0.5s ease-out; text-align: center; }
+        :root { --primary-bg: #050a14; --accent: #ffd700; --soft-white: #f0f0f0; }
+        body { margin: 0; background-color: var(--primary-bg); color: var(--soft-white); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+        .page { display: none; width: 85%; max-width: 550px; animation: slideIn 0.6s ease-out; text-align: center; }
         .active-page { display: block; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-
-        /* ستايل التيرمينال السيبراني */
-        .terminal { background: rgba(0,0,0,0.8); padding: 20px; border-radius: 12px; border: 1px solid var(--cyber-green); font-family: 'Courier New', monospace; text-align: left; direction: ltr; font-size: 0.85rem; box-shadow: 0 0 15px rgba(0,255,65,0.2); margin-bottom: 25px; }
-
-        .eid-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); padding: 35px; border-radius: 30px; border: 1px solid rgba(255, 215, 0, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; overflow: hidden; }
-        
-        .bro-message { font-size: 1.25rem; line-height: 1.8; color: #fff; margin: 20px 0; text-align: justify; text-align-last: center; }
-
-        button { background: var(--accent); color: #000; border: none; padding: 14px 40px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: 0.4s; margin-top: 15px; }
-        button:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(255,215,0,0.6); background: #fff; }
-
-        input { padding: 15px; border-radius: 15px; border: 2px solid var(--accent); background: rgba(255,255,255,0.05); color: white; text-align: center; width: 85%; font-size: 1.1rem; margin-bottom: 20px; outline: none; }
-        
-        footer { position: fixed; bottom: 10px; font-size: 0.75rem; color: #666; width: 100%; text-align: center; border-top: 1px solid #1f2937; padding-top: 8px; background: rgba(3,7,18,0.9); }
-
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .terminal { background: rgba(0,0,0,0.7); padding: 15px; border-radius: 8px; border-left: 3px solid var(--accent); font-family: monospace; text-align: left; direction: ltr; font-size: 0.9rem; margin-bottom: 20px; }
+        .eid-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); padding: 25px; border-radius: 25px; border: 1px solid rgba(255, 215, 0, 0.2); }
+        .love-message { font-size: 1.2rem; line-height: 1.8; color: #fff; margin: 20px 0; }
+        input { padding: 12px; border-radius: 12px; border: 1px solid var(--accent); background: transparent; color: white; text-align: center; width: 80%; margin-bottom: 15px; }
+        button { background: var(--accent); color: #000; border: none; padding: 12px 35px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+        footer { position: fixed; bottom: 15px; font-size: 0.8rem; color: #888; text-align: center; width: 100%; border-top: 1px solid #222; padding-top: 10px; }
         canvas#fireworks { position: fixed; top: 0; left: 0; pointer-events: none; z-index: -1; }
-        
-        /* العداد الرهيب */
-        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 25px; }
-        .timer-box { background: rgba(255,215,0,0.1); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,215,0,0.2); }
-        .timer-box span { display: block; font-size: 1.6rem; font-weight: 900; color: var(--accent); }
     </style>
 </head>
 <body>
 
-    <div class="background-animate"></div>
     <canvas id="fireworks"></canvas>
 
     <div class="page active-page" id="p1">
         <div class="terminal">
-            <span style="color: var(--cyber-green);">ammar@SUT:~$</span> ./init_friendship_v2.sh<br>
-            [+] System Check: March 18, 2026<br>
-            [+] Ramadan Session: Closing...<br>
-            [+] Next Event: Eid Al-Fitr (Friday)<br>
-            <span style="color: var(--accent);">مستعد لفك تشفير أقوى ذكرى؟</span>
+            <span style="color: #00ff00;">ammar@SUT:~$</span> python3 memory_loader.py<br>
+            [+] System: RAMADAN_2026_ENDING<br>
+            [+] Countdown: Target Friday March 20<br>
+            <span style="color: #ffd700;">جاهز تفتح قلبك للرحلة دي؟</span>
         </div>
-        <button onclick="startExperience()">فك التشفير الآن 🔥</button>
+        <button onclick="startExperience()">يالا بينا ✨</button>
     </div>
 
     <div class="page" id="p2">
-        <h2 style="color: var(--accent);">يا صحبي رمضان السنة دي كان غير..</h2>
-        <p class="bro-message">
-            الجدعنة مش مجرد كلمة، دي مواقف وذكريات بتتحفر في القلب. <br>
-            رمضان 2026 كان أحلى بكتير عشان قضيناه سوا، <br>
-            وده أول عيد يجمعنا، ويارب ميكونش الأخير.. <br>
-            فخور بيك دايماً يا وحش.
-        </p>
-        <button onclick="goPage(3)">التالي: بوابة العيد ➡️</button>
+        <h2 style="color: var(--accent);">قبل ما نودع رمضان..</h2>
+        <p class="love-message">الأيام اللي فاتت كانت أجمل أيام حياتي عشان قضيتها معاك.. رمضان السنة دي كان له طعم مختلف بسبب وجودك.</p>
+        <button onclick="goPage(3)">التالي ➡️</button>
     </div>
 
     <div class="page" id="p3">
-        <h2 style="color: var(--accent);">Authentication Required</h2>
-        <p>عشان نفتح السيستم ونعرض المفاجأة، لازم نتأكد إن الهدية وصلت لصاحبها الحقيقي:</p>
-        <input type="text" id="userName" placeholder="اكتب اسمك الغالي هنا..." autocomplete="off">
+        <h2 style="color: var(--accent);">تأكيد وصول الهدية 🎁</h2>
+        <p>حابب أتأكد إن الهدية دي وصلت للشخص الصح، ممكن تكتب اسمك الغالي هنا؟</p>
+        <input type="text" id="userName" placeholder="اكتب اسمك هنا...">
         <br>
-        <button onclick="unlockCelebration()">دخول احتفال العيد 🚀</button>
+        <button onclick="unlockCelebration()">تأكيد واستلام المفاجأة 🎉</button>
     </div>
 
     <div class="page" id="p4">
         <div class="eid-card">
-            <h1 id="greeting" style="color: var(--accent); margin-bottom: 5px;"></h1>
-            <p class="bro-message" style="font-size: 1.1rem;">
-                كل سنة وإحنا في ضهر بعض، <br>
-                وكل سنة وإحنا بنكبر وبنحقق أحلامنا سوا. <br>
-                ده <b>أول عيد فطر لينا مع بعض</b>، <br>
-                ويا بختي بيك يا جدع. <br>
-                <b>عيد سعيد عليك يا غالي ❤️</b>
+            <h1 id="greeting" style="color: var(--accent);"></h1>
+            <p class="love-message">
+                عارف؟ مكنتش أتخيل إن العيد ممكن يكون بالفرحة دي.. <br>
+                بس عشان ده <b>أول عيد لينا مع بعض</b>، حاسس إنه أحلى عيد في الدنيا. <br>
+                كل سنة وأنت جنبي، وكل سنة وإحنا بنكبر سوا وبنعيش تفاصيل أحلى. <br>
+                <b>بحبك جداً.. وعيد سعيد عليك يا غالي ❤️</b>
             </p>
-            
-            <div class="timer-grid">
-                <div class="timer-box"><span id="d">00</span><small>يوم</small></div>
-                <div class="timer-box"><span id="h">00</span><small>ساعة</small></div>
-                <div class="timer-box"><span id="m">00</span><small>دقيقة</small></div>
-                <div class="timer-box"><span id="s">00</span><small>ثانية</small></div>
-            </div>
-            
-            <button style="background:#25d366; color:white; font-size: 0.9rem;" onclick="shareOnWhatsApp()">شارك التهنئة 📲</button>
+            <div id="countdown" style="font-weight: bold; color: var(--accent); margin-top: 10px;"></div>
         </div>
     </div>
 
     <footer>
-        Designed with ⚡ by <b>عمار حسام عبد اللطيف</b> | 📱 01102353779<br>
-        📧 amarhossam0000@gmail.com | SUT Cybersecurity Student
+        صُنع بكل حب بواسطة <b>عمار حسام عبد اللطيف</b> | 📱 01102353779<br>
+        📧 amarhossam0000@gmail.com
     </footer>
 
     <audio id="ramadanSnd" loop preload="auto"><source src="ramadan.mp3" type="audio/mpeg"></audio>
@@ -112,7 +74,12 @@
         const eidSnd = document.getElementById('eidSnd');
 
         function startExperience() {
-            ramadanSnd.play().catch(() => alert("تأكد من رفع ملف ramadan.mp3"));
+            // محاولة التشغيل مع معالجة خطأ المتصفح
+            const playPromise = ramadanSnd.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => { console.log("الصوت اشتغل!"); })
+                .catch(error => { alert("اضغط مرة تانية عشان الصوت يشتغل (سياسة المتصفح)"); });
+            }
             goPage(2);
         }
 
@@ -123,30 +90,28 @@
 
         function unlockCelebration() {
             const name = document.getElementById('userName').value;
-            if(!name) return alert("لازم نتأكد من الاسم يا بطل!");
-            
+            if(!name) return alert("من فضلك اكتب اسمك 😊");
             ramadanSnd.pause();
-            eidSnd.play().catch(() => alert("تأكد من رفع ملف eid.mp3"));
-            
+            eidSnd.play();
             goPage(4);
             document.getElementById('greeting').innerText = `عيد مبارك يا ${name}!`;
             startFireworks();
         }
 
-        // العداد ليوم الجمعة 20 مارس 2026 (الفجر)
-        const targetDate = new Date("March 20, 2026 05:00:00").getTime();
+        // العداد ليوم الجمعة 20 مارس 2026
+        const targetDate = new Date("March 20, 2026 05:30:00").getTime();
         setInterval(() => {
             const diff = targetDate - new Date().getTime();
-            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            if (diff > 0) {
+                document.getElementById('countdown').innerText = `باقي على يوم الجمعة: ${d} يوم و ${h}:${m}:${s}`;
+            } else {
+                document.getElementById('countdown').innerText = `كل سنة وأنت طيب.. العيد بدأ!`;
+            }
         }, 1000);
-
-        function shareOnWhatsApp() {
-            const text = encodeURIComponent("عمار بعتلك تهنئة رجولة بمناسبة أول عيد سوا! 😍 افتح الرابط وشوف: \n" + window.location.href);
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
 
         function startFireworks() {
             const canvas = document.getElementById('fireworks');
@@ -155,8 +120,10 @@
             canvas.height = window.innerHeight;
             setInterval(() => {
                 ctx.fillStyle = `hsl(${Math.random()*360}, 100%, 50%)`;
-                ctx.beginPath(); ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, 4, 0, 7); ctx.fill();
-            }, 50);
+                ctx.beginPath();
+                ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, 3, 0, 7);
+                ctx.fill();
+            }, 80);
         }
     </script>
 </body>
