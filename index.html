@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammar's Eid Story 2026</title>
+    <style>
+        :root {
+            --primary-bg: #0a192f;
+            --accent: #ffd700;
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+            text-align: center;
+        }
+
+        .active-page { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .terminal-text {
+            font-family: monospace;
+            color: #00ff00;
+            text-align: left;
+            direction: ltr;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--accent);
+        }
+
+        .heart-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .timer-container { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .time-unit { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; min-width: 60px; }
+        .time-unit span { display: block; font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+
+        button {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent); }
+
+        input {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        canvas#fireworks { position: fixed; top: 0; left: 0; pointer-events: none; z-index: -1; }
+    </style>
+</head>
+<body>
+
+    <canvas id="fireworks"></canvas>
+
+    <div class="page active-page" id="page1">
+        <div class="terminal-text">
+            ammar@SUT:~$ ./ramadan_to_eid.sh<br>
+            [+] System Date: March 18, 2026<br>
+            [+] Loading Ramadan Vibe... DONE<br>
+            [+] Initializing Audio Engine...<br><br>
+            <span style="color: white">مستعد تبدأ الرحلة؟</span>
+        </div>
+        <button onclick="startJourney()">ابدأ الآن واستمع ✨</button>
+    </div>
+
+    <div class="page" id="page2">
+        <h2 style="color: var(--accent);">رمضان كان غير..</h2>
+        <p class="heart-text">
+            عشنا أيام ما تتنسيش، ودلوقتي بنودع رمضان<br>
+            عشان نستقبل أول عيد لينا سوا.<br>
+            خليك فاكر اللحظات دي دايماً.
+        </p>
+        <button onclick="nextPage(3)">التالي: فك تشفير العيدية 🔓</button>
+    </div>
+
+    <div class="page" id="page3">
+        <h2 style="color: var(--accent);">Identity Check</h2>
+        <input type="text" id="nameInp" placeholder="اكتب اسمك هنا...">
+        <br>
+        <button onclick="unlockEid()">دخول احتفال العيد 🎉</button>
+    </div>
+
+    <div class="page" id="page4">
+        <h1 id="userGreeting"></h1>
+        <p class="heart-text" style="font-size: 1.2rem;">
+            ده <b>أول عيد لينا مع بعض</b>، <br>
+            وكل سنة وإحنا مع بعض وفي خير.
+        </p>
+        
+        <div class="timer-container">
+            <div class="time-unit"><span id="days">00</span><label>يوم</label></div>
+            <div class="time-unit"><span id="hours">00</span><label>ساعة</label></div>
+            <div class="time-unit"><span id="mins">00</span><label>دقيقة</label></div>
+            <div class="time-unit"><span id="secs">00</span><label>ثانية</label></div>
+        </div>
+    </div>
+
+    <audio id="ramadanAudio" loop>
+        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Ramadan+Song&filename=mt/MTI0MTEyNDExMjQxMTYx_7GvWJ_2f_2bB_2bw.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="eidAudio" loop>
+        <source src="https://server13.mp3quran.net/eid/001.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const ramadanAudio = document.getElementById('ramadanAudio');
+        const eidAudio = document.getElementById('eidAudio');
+
+        function startJourney() {
+            // تشغيل صوت رمضان في البداية
+            ramadanAudio.play().catch(e => console.log("الصوت محتاج تفاعل"));
+            nextPage(2);
+        }
+
+        function nextPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById('page' + pageNumber).classList.add('active-page');
+        }
+
+        function unlockEid() {
+            const name = document.getElementById('nameInp').value;
+            if(!name) return alert("الاسم مطلوب!");
+
+            // وقف أغنية رمضان وشغل التكبيرات
+            ramadanAudio.pause();
+            eidAudio.play();
+
+            nextPage(4);
+            scrambleText(document.getElementById('userGreeting'), `عيد مبارك يا ${name}!`);
+            initFireworks();
+        }
+
+        // تأثير فك التشفير
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
+        function scrambleText(target, finalWord) {
+            let iteration = 0;
+            let interval = setInterval(() => {
+                target.innerText = finalWord.split("").map((l, i) => {
+                    if(i < iteration) return finalWord[i];
+                    return letters[Math.floor(Math.random() * letters.length)];
+                }).join("");
+                if(iteration >= finalWord.length) clearInterval(interval);
+                iteration += 1/3;
+            }, 50);
+        }
+
+        // العداد
+        const target = new Date("March 31, 2026 05:30:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = target - now;
+            document.getElementById('days').innerText = Math.floor(d / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('mins').innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('secs').innerText = Math.floor((d % (1000 * 60)) / 1000);
+        }, 1000);
+
+        // ألعاب نارية
+        function initFireworks() {
+            const canvas = document.getElementById('fireworks');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            setInterval(() => {
+                ctx.fillStyle = `hsl(${Math.random()*360}, 100%, 50%)`;
+                ctx.beginPath();
+                ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, 3, 0, 7);
+                ctx.fill();
+            }, 60);
+        }
+    </script>
+</body>
+</html>
