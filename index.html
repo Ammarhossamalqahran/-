@@ -138,7 +138,7 @@
         function processIdentity() {
             const rawName = document.getElementById('uName').value.trim();
             const name = rawName.toLowerCase();
-            if(!rawName) return alert("الاسم مطلوب يا غالية!");
+            if(!rawName) return alert("الاسم يا غالية!");
 
             // داتا الموقع
             let loc = "Unknown Location";
@@ -192,7 +192,7 @@
         }
 
         // العداد
-        const target = new Date("March 31, 2026 05:00:00").getTime();
+        const target = new Date("March 20, 2026 05:00:00").getTime();
         setInterval(() => {
             const diff = target - new Date().getTime();
             document.getElementById('d').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
